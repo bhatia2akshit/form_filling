@@ -1,0 +1,77 @@
+.upload-container {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .upload-container.dragging {
+    border-color: #3f51b5;
+    background-color: rgba(63, 81, 181, 0.05);
+  }
+  
+  .upload-area {
+    margin-bottom: 1rem;
+  }
+  
+  .upload-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 1rem;
+  }
+  
+  .upload-label mat-icon {
+    font-size: 24px;
+    width: 64px;
+    height: 24px;
+    color: #3f51b5;
+  }
+  
+  .hint {
+    font-size: 0.8rem;
+    color: #666;
+  }
+  
+  .file-list {
+    margin: 1rem 0;
+    text-align: left;
+    border: solid gray;
+  }
+  
+  .file-name {
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .file-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 0px;
+    width: 700px;
+  }
+  
+  .submitButton {
+    margin-top: 1rem;
+    width: 100px;
+    background-color: cyan;
+  }
+
+  .success-snackbar {
+    background-color: #4caf50 !important;
+    color: white !important;
+  }
+  
+  .error-snackbar {
+    background-color: #f44336 !important;
+    color: white !important;
+  }
+
+  

@@ -1,0 +1,54 @@
+<div class="upload-container" 
+     [class.dragging]="isDragging"
+     (dragover)="onDragOver($event)"
+     (dragleave)="onDragLeave($event)"
+     (drop)="onDrop($event)">
+  
+  <!-- Section 1: Upload Area (always visible) -->
+  <div class="upload-area">
+    <input type="file" id="fileInput" 
+           accept="application/pdf" 
+           multiple 
+           (change)="onFileSelected($event)"
+           style="display: none;">
+    <label for="fileInput" class="upload-label">
+      <mat-icon>add</mat-icon>
+      <span>Upload PDF Files</span>
+      <span class="hint">(or drag & drop)</span>
+    </label>
+  </div>
+
+  <!-- Section 2: File List (visible when files exist) -->
+  @if (uploadedFiles.length>0){
+    <div class="file-list">
+      <mat-list>
+        @for(file of uploadedFiles; track file.name; let i =$index){
+        <mat-list-item>
+          <div class="file-actions">
+            <span>{{ file.name }}</span>
+            <div class="buttonsActions">
+              <button class="downloadFile" (click)="downloadFile(file)">download
+              </button>
+              <button class="removeButton" (click)="removeFile(i)">
+                remove
+              </button>
+            </div>
+          </div>
+        </mat-list-item>
+        }
+      </mat-list>
+    </div>
+  }
+  
+<mat-progress-bar 
+  *ngIf="isLoading"
+  mode="indeterminate">
+</mat-progress-bar>
+
+  <!-- Section 3: Submit Button (visible when files exist) -->
+  <div class="submit-section" *ngIf="uploadedFiles.length > 0">
+    <button class="submitButton" (click)="submitFiles()">
+      Process PDFs
+    </button>
+  </div>
+</div>

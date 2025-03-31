@@ -1,0 +1,23 @@
+.json-container {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: left;
+    transition: all 0.3s;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.json-list {
+    margin: 1rem 0;
+    text-align: left;
+    border: gray;
+  }
+
+.json-container > p {
+    margin: 0; /* Removes default margin */
+    font-weight: bold; /* Optional: Makes text bold */
+    font-size: 1.2em; /* Optional: Increases font size */
+    text-align: center;
+    
+  }
