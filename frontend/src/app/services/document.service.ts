@@ -7,8 +7,13 @@ import { ConfigService } from './config.service';
   providedIn: 'root'
 })
 export class DocumentService {
+  readonly backend_url: any;
 
-  constructor(private http: HttpClient, private configParams: ConfigService) { }
+
+  constructor(private http: HttpClient, private configParams: ConfigService) {
+    this.backend_url = configParams.apiUrl;
+  }
+
 
   analyzeDocuments(files: File[]): Observable<any> {
     const formData = new FormData();
@@ -16,12 +21,10 @@ export class DocumentService {
       formData.append('files', file, file.name);
     });
 
-    const backend_url = this.configParams.apiUrl;
-
-    return this.http.post(`${backend_url}/analyze-documents`, formData);
+    return this.http.post(`${this.backend_url}/analyze-documents`, formData);
   }
 
-  getJSONDocuments(file: File[]) {
+  fetchJSONDocuments(file: File[]) {
     return ;
   }
 }
