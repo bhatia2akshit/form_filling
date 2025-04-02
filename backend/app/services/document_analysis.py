@@ -2,18 +2,18 @@ from azure.ai.formrecognizer import DocumentAnalysisClient
 from azure.ai.documentintelligence.models import AnalyzeDocumentRequest
 import os
 from azure.core.credentials import AzureKeyCredential
-from flask import current_app
 import json
 from datetime import datetime
-
 from pathlib import Path
 
 
 class DocumentAnalysisService:
-    _combined_json_path: Path = Path(current_app.config["COMBINED_JSON_FOLDER"])
-    _json_folder: Path = Path(current_app.config["JSON_FOLDER"])
-    _azure_endpoint: str = current_app.config["AZURE_ENDPOINT"]
-    _azure_key: str = current_app.config["AZURE_KEY"]
+    
+    def __init__(self, config):
+        self._combined_json_path: Path = Path(config["COMBINED_JSON_FOLDER"])
+        self._json_folder: Path = Path(config["JSON_FOLDER"])
+        self._azure_endpoint: str = config["AZURE_ENDPOINT"]
+        self._azure_key: str = config["AZURE_KEY"]
 
     def analyze_document(self, file_path) -> dict:
         try:

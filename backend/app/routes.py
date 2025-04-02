@@ -5,8 +5,13 @@ from .utils.file_handling import save_uploaded_file
 from .services.document_analysis import DocumentAnalysisService
 
 api = Blueprint("api", __name__)
-documentAnalysisService = DocumentAnalysisService()
+documentAnalysisService = None
 
+def get_document_analysis_service():
+    global documentAnalysisService
+    if documentAnalysisService is None:
+        documentAnalysisService = DocumentAnalysisService(current_app.config)
+    return documentAnalysisService
 
 @api.route("/combine-info", methods=["GET"])
 def combine_json_objects() -> tuple[Response, int]:
@@ -15,7 +20,8 @@ def combine_json_objects() -> tuple[Response, int]:
 
     """
     try:
-        summarized_data = documentAnalysisService.summarize_jsons()
+        service = get_document_analysis_service()
+        summarized_data = service.summarize_jsons()
         return (
             jsonify(
                 {
@@ -53,7 +59,8 @@ def analyze_document() -> tuple[Response, int]:
             return jsonify({"error": "Invalid file type"}), 400
 
         # Analyze the document
-        documentAnalysisService.analyze_document(file_path)
+        service = get_document_analysis_service()
+        service.analyze_document(file_path)
 
         try:
             os.remove(file_path)
