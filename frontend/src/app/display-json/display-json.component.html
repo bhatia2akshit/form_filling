@@ -1,19 +1,21 @@
 <div class="json-container">
-    <p>JSON Files</p>
-    <mat-list>
-@for (file of files; track file; let i=$index){
-    <mat-list-item>
-        <div class="json-list">
-          <span>{{ file }}</span>
-          <div class="buttonsActions">
-            <!-- <button class="downloadFile" (click)="downloadFile(file)">download
-            </button>
-            <button class="removeButton" (click)="removeFile(i)">
-              remove
-            </button> -->
-          </div>
-        </div>
-      </mat-list-item>
-}
-</mat-list>
+  <h2>Combined JSON Data</h2>
+  
+  @if (isLoading) {
+    <div class="loading">
+      Loading JSON data...
+    </div>
+  } @else if (error) {
+    <div class="error">
+      {{ error }}
+    </div>
+  } @else if (jsonData) {
+    <div class="json-content">
+      <pre>{{ jsonData | json }}</pre>
+    </div>
+  } @else {
+    <div class="no-data">
+      No JSON data available
+    </div>
+  }
 </div>

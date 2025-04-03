@@ -1,24 +1,40 @@
-import { Component } from '@angular/core';
-import { ConfigService } from '../services/config.service';
+import { Component, OnInit } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
+import { DocumentService } from '../services/document.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-display-json',
-  imports: [MatListModule],
+  standalone: true,
+  imports: [MatListModule, CommonModule],
   templateUrl: './display-json.component.html',
   styleUrl: './display-json.component.scss'
 })
-export class DisplayJsonComponent {
-  // List out all the jsons present in the saved directory.
-  files = [1,2,3]
+export class DisplayJsonComponent implements OnInit {
+  jsonData: any = null;
+  isLoading: boolean = false;
+  error: string | null = null;
 
-  // downloadFile(file: {name: string, file: File}): void {
-  //   const url = URL.createObjectURL(file.file);
-  //   const a = document.createElement('a');
-  //   a.href = url;
-  //   a.download = file.name;
-  //   a.click();
-  //   URL.revokeObjectURL(url);
-  // }
+  constructor(
+    private documentService: DocumentService
+  ) {}
 
+  ngOnInit() {
+    this.loadCombinedJson();
+  }
+
+  loadCombinedJson() {
+    this.isLoading = true;
+    this.error = null;
+    this.documentService.getCombinedJson().subscribe({
+      next: (data) => {
+        this.jsonData = data;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.error = 'Failed to load JSON data';
+        this.isLoading = false;
+      }
+    });
+  }
 }

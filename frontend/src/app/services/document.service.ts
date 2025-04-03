@@ -24,7 +24,7 @@ export class DocumentService {
     return this.http.post(`${this.backend_url}/analyze-documents`, formData);
   }
 
-  fetchJSONDocuments(file: File[]) {
-    return ;
+  getCombinedJson(): Observable<any> {
+    return this.http.get(`${this.backend_url}/get-combine-info`);
   }
 }
