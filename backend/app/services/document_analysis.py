@@ -65,12 +65,13 @@ def analyze_document(file) -> dict:
 
         output_file = output_path.open("w")
         if len(formatted_result) == 0:
-            logger.info('empty json object')
+            logger.info("empty json object")
         else:
             logger.info(f"formatted_result: {formatted_result}")
             json.dump(formatted_result, output_file, indent=4)
-        
-        time.sleep(5)    
+            output_file.close()
+
+        time.sleep(5)
         logger.info("Summarizing JSONs")
         summarize_jsons()
 
@@ -94,17 +95,17 @@ def summarize_jsons() -> None:
     else:
         logger.info("no existing combined json object found")
         combined_json: dict = {}
-    
-    time.sleep(7)
+
+    time.sleep(5)
     json_files: list[str] = os.listdir(_json_folder)
     logger.info(f"json_files: {json_files}")
     for file in json_files:
         json_file: dict = None
         if file.endswith(".json"):
-            opened_file = (_json_folder / Path(file)).open("r")
+            opened_file = (_json_folder / Path(file)).open("rb")
 
             content = opened_file.read()
-            logger.info('content is: ', content)
+            logger.info("content is: ", content)
             logger.info(f"content: {content}")
             # if not content.strip():
             #     logger.warning(f"Skipping empty file: {file}")
@@ -124,7 +125,9 @@ def summarize_jsons() -> None:
 
                 # if the key is already present in the combined json object, append the value to the existing value
                 if key in combined_json:
-                    logger.info(f"key: {key} already present in the combined json object")
+                    logger.info(
+                        f"key: {key} already present in the combined json object"
+                    )
                     values = combined_json[key]
                     if value not in values:
                         combined_json[key].append(value)
@@ -134,7 +137,7 @@ def summarize_jsons() -> None:
 
     logger.info("saving the combined json object")
     if len(combined_json) == 0:
-        logger.info('empty combined json object')
+        logger.info("empty combined json object")
     # save combined_json to the folder.
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     output_filepath = _combined_json_folder / Path(
