@@ -3,5 +3,5 @@ JSON_FOLDER = ./json_objects
 COMBINED_JSON_FOLDER = ./combined_json_objects
 
 # Azure Document Intelligence
-AZURE_ENDPOINT = https://infoextraction.cognitiveservices.azure.com/
-AZURE_KEY = CzJ4i5wO1cmA2nRMbQ3GaRbDiLUoPpZAvFERRqpKZ2ldClLVvpwnJQQJ99BCAC1i4TkXJ3w3AAALACOGXf2j
+AZURE_ENDPOINT = <>
+AZURE_KEY = <>
