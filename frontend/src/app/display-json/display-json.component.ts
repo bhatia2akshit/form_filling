@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { DocumentService } from '../services/document.service';
 import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-display-json',
@@ -14,6 +15,7 @@ export class DisplayJsonComponent implements OnInit {
   jsonData: any = null;
   isLoading: boolean = false;
   error: string | null = null;
+  
 
   constructor(
     private documentService: DocumentService
@@ -21,7 +23,9 @@ export class DisplayJsonComponent implements OnInit {
 
   ngOnInit() {
     this.loadCombinedJson();
+
   }
+
 
   loadCombinedJson() {
     this.isLoading = true;

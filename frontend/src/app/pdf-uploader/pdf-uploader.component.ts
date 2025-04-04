@@ -66,7 +66,7 @@ export class PdfUploaderComponent {
   private handleFiles(files: FileList): void {
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      if (file.type === 'application/pdf') {
+      if (file) {
         this.uploadedFiles.push({name: file.name, file});
       }
     }

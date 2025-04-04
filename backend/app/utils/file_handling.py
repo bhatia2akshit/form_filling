@@ -1,18 +1,16 @@
 import os
 from werkzeug.utils import secure_filename
-from flask import current_app
+
 
 def allowed_file(filename):
-    return (
-        "." in filename
-        and filename.rsplit(".", 1)[1].lower()
-        in current_app.config["ALLOWED_EXTENSIONS"]
-    )
+    allowed_extensions = ["pdf", "png", "jpg", "jpeg"]
 
-def save_uploaded_file(file):
-    
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in allowed_extensions
+
+
+def save_uploaded_file(file, upload_folder):
     if file:  # and allowed_file(file.filename):
-        filepath = os.path.join(current_app.config["UPLOAD_FOLDER"], file.filename)
+        filepath = os.path.join(upload_folder, file.filename)
         file.save(filepath)
         return filepath
 
