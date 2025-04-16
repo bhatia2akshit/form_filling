@@ -95,3 +95,4 @@ local_settings.py
 # Logs
 *.log
 logs/ 
+backend/config.txt
