@@ -37,7 +37,7 @@ venv.bak/
 .DS_Store
 
 # Project specific
-backend/config.py
+backend/config.txt
 backend/json_objects/
 backend/uploads/
 backend/combined_json_objects/
