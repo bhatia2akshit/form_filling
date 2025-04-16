@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 @api.route("/get-combine-info", methods=["GET"])
 def load_json_objects_route() -> tuple[Response, int]:
     """Intended Functionality: Gets the combined json object for the current user from the database.
-    Current Functionality: Returns a the combined json object from the folder.
+    Current Functionality: Returns the combined json object from the folder.
 
     """
     logger.info("Received request for combined JSON objects")
@@ -43,7 +43,7 @@ def load_json_objects_route() -> tuple[Response, int]:
 
 @api.route("/health", methods=["GET"])
 def check_health() -> tuple[Response, int]:
-    logger.debug("Health check endpoint called")
+    logger.info("Health check endpoint called")
     return jsonify({"status": "healthy"}), 200
 
 

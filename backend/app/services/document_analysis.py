@@ -14,31 +14,46 @@ logger = logging.getLogger(__name__)
 
 def load_config(file_path):
     config = {}
-    if Path(file_path).exists():
-        f = Path(file_path).open("r")
-        for line in f:
-            if "=" in line:
-                key, value = line.strip().split("=", 1)
-                config[key.strip()] = value.strip()
+    try:
+        if Path(file_path).exists():
+            f = Path(file_path).open("r")
+            for line in f:
+                if "=" in line:
+                    key, value = line.strip().split("=", 1)
+                    config[key.strip()] = value.strip()
+            f.close()
+        if config['AZURE_ENDPOINT'] == "<>" or config['AZURE_KEY'] == "<>":
+            raise ValueError("Azure credentials are not set in the config file.")
+
+    except FileNotFoundError as file_error:
+        logger.error(f"Configuration file not found: {file_error}")
+
+    logger.info(f"Loaded configuration: {config}")
     return config
 
 
 config = load_config("./config.txt")
-print(config)
 
 # Global variables for configuration
 _upload_folder = Path(config["UPLOAD_FOLDER"])
+_upload_folder.mkdir(parents=True, exist_ok=True)
 _json_folder = Path(config["JSON_FOLDER"])
+_json_folder.mkdir(parents=True, exist_ok=True)
 _combined_json_folder = Path(config["COMBINED_JSON_FOLDER"])
+_combined_json_folder.mkdir(parents=True, exist_ok=True)
 _azure_endpoint = config["AZURE_ENDPOINT"]
 _azure_key = config["AZURE_KEY"]
 logger.debug("Document Analysis Service initialized with config")
 
 
-def analyze_document(file) -> dict:
+def analyze_document(file) -> None:
+    """Analyzes the document using Azure Form Recognizer and saves the results in JSON format.
+
+    Args: file - The file to be analyzed.
+    """
     try:
         # Save the uploaded file
-        logger.info("Saving uploaded file")
+        logger.info(f"Saving uploaded file: {file}")
         file_path = save_uploaded_file(file=file, upload_folder=_upload_folder)
 
         document_analysis_client = DocumentAnalysisClient(
